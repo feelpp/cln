@@ -1,7 +1,7 @@
 2005-12-17  Richard B. Kreckel  <kreckel@ginac.de>
 
 	* Branched cln_1-1. This is the maintenance branch. It is for
-	low-impact patches. The main will eventually become CLN 1.2.0.
+	low-impact patches. The main branch will eventually become CLN 1.2.0.
 
 2005-12-15  Dmitry V. Kustov  <kustov@telex221.ru>
 

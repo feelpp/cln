@@ -1,3 +1,10 @@
+2006-04-22  Richard B. Kreckel  <kreckel@ginac.de>
+
+	* Apply patch for x86_64 from mainline:
+	2005-12-02  Bruno Haible  <bruno@clisp.org>
+		* src/base/cl_low.h (mulu64) [x86_64]: Change asm restriction,
+		since mulq doesn't accept immediate arguments.
+
 2005-12-17  Richard B. Kreckel  <kreckel@ginac.de>
 
 	* Branched cln_1-1. This is the maintenance branch. It is for

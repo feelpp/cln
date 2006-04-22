@@ -356,7 +356,7 @@ inline uint32 mulu32_unchecked (uint32 arg1, uint32 arg2)
        var register uint64 _lo;                                  \
        __asm__("mulq %2"                                         \
                : "=d" /* %rdx */ (_hi), "=a" /* %rax */ (_lo)    \
-               : "g" ((uint64)(x)), "1" /* %rax */ ((uint64)(y)) \
+               : "rm" ((uint64)(x)), "1" /* %rax */ ((uint64)(y)) \
               );                                                 \
        hi_zuweisung _hi; lo_zuweisung _lo;                       \
      })

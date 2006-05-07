@@ -1,3 +1,7 @@
+2006-05-07  Richard B. Kreckel  <kreckel@ginac.de>
+
+	* include/cln/modules.h (CL_JUMP_TO): Fix for Intel Mac.
+
 2006-04-22  Richard B. Kreckel  <kreckel@ginac.de>
 
 	* Apply patch for x86_64 from mainline:

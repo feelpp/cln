@@ -125,16 +125,16 @@ static const cl_decimal_decoded_float decode_float_decimal (const cl_F& x)
     //        dann ist d <= floor(e*a/b) <= d+1 .
     // e<0  : wähle lg(2) - 1/abs(e) < a/b < lg(2),
     //        dann ist d <= floor(e*a/b) <= d+1 .
-    // Es ist bekannt, daß abs(e) <= 2^31 + 2^20 .
+    // Es ist bekannt, dass abs(e) <= 2^32*64 + 2^31 .
     // Unser d sei := floor(e*a/b)-1. (d /= 0, da abs(e) >= 7.)
     d = minus1(minusp(e)
                ? (e >= -970
                   ? floor1(e*3,10) // Näherungsbruch 3/10
-                  : floor1(e*21306,70777) // Näherungsbruch 21306/70777
+                  : floor1(e*97879,325147) // Näherungsbruch 97879/325147
                  )
                : (e <= 22000
                   ? floor1(e*28,93) // Näherungsbruch 28/93
-                  : floor1(e*12655,42039) // Näherungsbruch 12655/42039
+                  : floor1(e*1838395,6107016) // Näherungsbruch 1838395/6107016
                  )
               );
     // Das wahre d wird durch diese Schätzung entweder getroffen
@@ -248,10 +248,10 @@ static const cl_decimal_decoded_float decode_float_decimal (const cl_F& x)
     // |e| ist recht klein -> man kann 2^e und 10^d exakt ausrechnen
     if (!minusp(e)) {
       // e >= 0. Schätze d = floor(e*lg(2)) wie oben.
-      // Es ist e<=2*l<2^21.
+      // Es ist e<=2*l<2^33.
       d = (e <= 22000
            ? floor1(e*28,93) // Näherungsbruch 28/93
-           : floor1(e*4004,13301) // Näherungsbruch 4004/13301
+           : floor1(e*76573,254370) // Näherungsbruch 76573/254370
           );
       // Das wahre d wird durch diese Schätzung entweder getroffen
       // oder um 1 überschätzt, aber das können wir leicht feststellen.
@@ -267,10 +267,10 @@ static const cl_decimal_decoded_float decode_float_decimal (const cl_F& x)
       a2 = floor1(minus1(ash(oben,e)),zehn_d);
     } else {
       // e < 0. Schätze d = floor(e*lg(2)) wie oben.
-      // Es ist |e|<=2*l<2^21.
+      // Es ist |e|<=2*l<2^33.
       d = (e >= -970
            ? floor1(e*3,10) // Näherungsbruch 3/10
-           : floor1(e*643,2136) // Näherungsbruch 643/2136
+           : floor1(e*21306,70777) // Näherungsbruch 21306/70777
           );
       // Das wahre d wird durch diese Schätzung entweder getroffen
       // oder um 1 überschätzt, aber das können wir leicht feststellen.

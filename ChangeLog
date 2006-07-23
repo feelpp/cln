@@ -1,3 +1,7 @@
+2006-07-23  Sheplyakov Alexei  <varg@theor.jinr.ru>
+
+	* src/base/random/cl_random_from.cc: Add support for MinGW.
+
 2006-06-14  Richard B. Kreckel  <kreckel@ginac.de>
 
 	* src/float/output/cl_F_dprint.cc (decode_float_decimal): Fix rare

@@ -1,5 +1,9 @@
 2006-08-06  Richard B. Kreckel  <kreckel@ginac.de>
 
+	* configure.ac: Re-enable shared lib on non-MinGW platforms, sigh.
+
+2006-08-06  Richard B. Kreckel  <kreckel@ginac.de>
+
 	* Apply patch for autoconf-2.60:
 	2006-04-25  Ralf Wildenhues <Ralf.Wildenhues@gmx.de>
 		* Makefile.in (datarootdir): New variable.

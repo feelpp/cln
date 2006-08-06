@@ -1,3 +1,11 @@
+2006-08-06  Richard B. Kreckel  <kreckel@ginac.de>
+
+	* Apply patch for autoconf-2.60:
+	2006-04-25  Ralf Wildenhues <Ralf.Wildenhues@gmx.de>
+		* Makefile.in (datarootdir): New variable.
+		* src/Makefile.in (datarootdir): New variable.
+		* doc/Makefile.in (datarootdir): New variable.
+
 2006-08-04  Sheplyakov Alexei  <varg@theor.jinr.ru>
 
 	* configure.ac: Disable shared lib on MinGW.

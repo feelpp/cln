@@ -1,3 +1,9 @@
+2006-08-08, version 1.1.13
+==========================
+
+* Compilation fixes for 64-bit brokenness introduced in last release.
+
+
 2006-08-06, version 1.1.12
 ==========================
 

@@ -18,11 +18,6 @@
 
 #if defined(HAVE_GETTIMEOFDAY)
   #include <sys/time.h>
-  #ifdef GETTIMEOFDAY_DOTS
-    extern "C" int gettimeofday (struct timeval * tp, ...);
-  #else
-    extern "C" int gettimeofday (struct timeval * tp, GETTIMEOFDAY_TZP_T tzp);
-  #endif
 #elif defined(_WIN32) && !defined(__CYGWIN__)
   /* <windows.h> included above. */
 #else

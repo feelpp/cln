@@ -24,19 +24,13 @@
 #include <unistd.h> // declares getpid()
 
 #if defined(HAVE_GETTIMEOFDAY)
-
 #include <sys/time.h>
-#ifdef GETTIMEOFDAY_DOTS
-  extern "C" int gettimeofday (struct timeval * tp, ...);
-#else
-  extern "C" int gettimeofday (struct timeval * tp, GETTIMEOFDAY_TZP_T tzp);
-#endif
 
 namespace cln {
 inline uint32 get_seed (void)
 {
 	var struct timeval tv;
-	gettimeofday(&tv,0);
+	gettimeofday(&tv,NULL);
 	return highlow32(tv.tv_sec,tv.tv_usec); // 16+16 zufällige Bits
 }
 }  // namespace cln

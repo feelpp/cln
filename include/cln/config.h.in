@@ -4,6 +4,12 @@
 #include "cln/host_cpu.h"
 #include "cln/version.h"
 
+/**
+ * Alignment of a `void*'. CLN needs it to distinguish between pointers
+ * and immediate values.
+ */
+#undef cl_word_alignment
+
 /* 
  * Numbers in the heap are stored as "digit" (or "limb" in GMP speak)
  * sequences. A digit is an unsigned int with sizeof(void *)*CHAR_BIT bits.

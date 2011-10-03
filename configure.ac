@@ -92,6 +92,9 @@ dnl
 AC_LANG([C++])
 AX_CXX_COMPILE_STDCXX([11], [ext], [optional])
 dnl
+AC_CHECK_ALIGNOF([void*])
+AC_DEFINE_UNQUOTED([cl_word_alignment], [$ac_cv_alignof_voidp], [Normal alignment of void*])
+dnl
 dnl           checks for header files
 dnl
 AC_CHECK_HEADERS([unistd.h])

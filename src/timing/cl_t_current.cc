@@ -23,12 +23,8 @@
 #else
   #include <ctime>
 #endif
-#ifdef HAVE_PERROR_DECL
-  #include <cerrno>
-  #include <cstdio>
-#else
-  extern "C" int perror (const char *);
-#endif
+#include <cerrno>
+#include <cstdio>
 
 namespace cln {
 

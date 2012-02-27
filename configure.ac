@@ -1,23 +1,14 @@
 dnl run autoreconf -iv to produce the configure script.
 
-m4_define([cl_version_major], [1])
-m4_define([cl_version_minor], [3])
-m4_define([cl_version_patchlevel], [6])
+m4_define([cl_version_major], CL_GET_VERSION([MAJOR]))
+m4_define([cl_version_minor], CL_GET_VERSION([MINOR]))
+m4_define([cl_version_patchlevel], CL_GET_VERSION([PATCHLEVEL]))
 m4_define([cl_version], [cl_version_major.cl_version_minor.cl_version_patchlevel])
 
 dnl Libtool's library version information for CLN.
-dnl (Not to be confused with CLN's release version.)
-dnl Making new releases:
-dnl * increment cl_lt_revision,
-dnl * if any interfaces have been added, removed, or changed, then increment
-dnl   cl_lt_current and set cl_lt_revision to 0,
-dnl * if any interfaces have been added, then increment cl_lt_age,
-dnl * if any interfaces have been removed, set cl_lt_age to 0.
-dnl (On many systems, $(cl_lt_current):$(cl_lt_revision):$(cl_lt_age) results in
-dnl libcln.so.$(cl_lt_current)-$(cl_lt_age).)
-m4_define([cl_lt_current], [6])
-m4_define([cl_lt_revision], [6])
-m4_define([cl_lt_age], [0])
+m4_define([cl_lt_current], CL_GET_LTVERSION([CURRENT]))
+m4_define([cl_lt_revision], CL_GET_LTVERSION([REVISION]))
+m4_define([cl_lt_age], CL_GET_LTVERSION([AGE]))
 m4_define([cl_lt_version], [cl_lt_current:cl_lt_revision:cl_lt_age])
 
 AC_INIT([cln], cl_version)
@@ -25,7 +16,7 @@ AC_PREREQ(2.59)
 AC_CONFIG_SRCDIR(src/integer/gcd/cl_I_gcd.cc)
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_MACRO_DIR([m4])
-AC_CONFIG_HEADERS(autoconf/cl_config.h include/cln/config.h include/cln/host_cpu.h include/cln/version.h src/base/cl_base_config.h src/base/cl_gmpconfig.h src/timing/cl_t_config.h)
+AC_CONFIG_HEADERS(autoconf/cl_config.h include/cln/config.h include/cln/host_cpu.h src/base/cl_base_config.h src/base/cl_gmpconfig.h src/timing/cl_t_config.h)
 AM_INIT_AUTOMAKE([foreign 1.10 dist-bzip2 subdir-objects])
 AH_TOP([#ifndef _CL_CONFIG_H])
 AH_TOP([#define _CL_CONFIG_H])
@@ -73,19 +64,6 @@ AC_PROG_LIBTOOL
 
 LT_VERSION_INFO=cl_lt_version
 AC_SUBST(LT_VERSION_INFO)
-
-dnl release version
-CL_VERSION_MAJOR=cl_version_major
-CL_VERSION_MINOR=cl_version_minor
-CL_VERSION_PATCHLEVEL=cl_version_patchlevel
-dnl release version for cln/config.h, so it can be tested by the preprocessor
-AC_DEFINE_UNQUOTED(CL_VERSION_MAJOR, $CL_VERSION_MAJOR, [Major version number of CLN])
-AC_DEFINE_UNQUOTED(CL_VERSION_MINOR, $CL_VERSION_MINOR, [Minor version number of CLN])
-AC_DEFINE_UNQUOTED(CL_VERSION_PATCHLEVEL, $CL_VERSION_PATCHLEVEL, [Patchlevel version number of CLN])
-dnl concatenated release version
-CL_VERSION=cl_version
-AC_DEFINE_UNQUOTED(CL_VERSION, $CL_VERSION, [CLN release number])
-AC_SUBST(CL_VERSION)
 
 dnl           checks for compiler characteristics
 dnl

@@ -92,11 +92,6 @@ dnl
 AC_LANG([C++])
 AX_CXX_COMPILE_STDCXX([11], [ext], [optional])
 dnl
-CL_LONGLONG
-                      dnl DEFS HAVE_LONGLONG
-CL_LONGDOUBLE
-                      dnl DEFS HAVE_LONGDOUBLE
-dnl
 dnl           checks for header files
 dnl
 AC_CHECK_HEADERS([unistd.h])

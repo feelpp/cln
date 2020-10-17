@@ -43,10 +43,8 @@ extern void fprintdecimal (std::ostream& stream, int x);
 extern void fprintdecimal (std::ostream& stream, unsigned long x);
 extern void fprintdecimal (std::ostream& stream, long x);
 
-#ifdef HAVE_LONGLONG
 extern void fprintdecimal (std::ostream& stream, unsigned long long x);
 extern void fprintdecimal (std::ostream& stream, long long x);
-#endif
 
 extern void fprinthexadecimal (std::ostream& stream, unsigned int x);
 extern void fprinthexadecimal (std::ostream& stream, int x);
@@ -54,10 +52,8 @@ extern void fprinthexadecimal (std::ostream& stream, int x);
 extern void fprinthexadecimal (std::ostream& stream, unsigned long x);
 extern void fprinthexadecimal (std::ostream& stream, long x);
 
-#ifdef HAVE_LONGLONG
 extern void fprinthexadecimal (std::ostream& stream, unsigned long long x);
 extern void fprinthexadecimal (std::ostream& stream, long long x);
-#endif
 
 
 struct cl_print_flags;

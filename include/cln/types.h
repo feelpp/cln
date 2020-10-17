@@ -41,17 +41,13 @@
   #if (long_bitsize==64)
     typedef long           sint64;
     typedef unsigned long  uint64;
-    #undef HAVE_LONGLONG
-    #define HAVE_LONGLONG
-  #elif defined(HAVE_LONGLONG)
-   #if defined(long_long_bitsize) && (long_long_bitsize==64)
+  #elif (long_long_bitsize==64)
     typedef long long           sint64;
     typedef unsigned long long  uint64;
-   #else // unusable type
-    #undef HAVE_LONGLONG
-   #endif
+  #else
+    #error "No 64 bit integer type?"
   #endif
-  #if defined(HAVE_LONGLONG) && (defined(__alpha__) || defined(__ia64__) || defined(__mips64__) || defined(__powerpc64__) || defined(__s390x__) || (defined(__sparc__) && defined(__arch64__)) || (defined(__x86_64__) || defined(_M_AMD64)) || defined(__aarch64__) || (defined(__riscv) && __riscv_xlen == 64)) || defined(__e2k__)
+  #if (defined(__alpha__) || defined(__ia64__) || defined(__mips64__) || defined(__powerpc64__) || defined(__s390x__) || (defined(__sparc__) && defined(__arch64__)) || (defined(__x86_64__) || defined(_M_AMD64)) || defined(__aarch64__) || (defined(__riscv) && __riscv_xlen == 64) || defined(__e2k__))
     // 64 bit registers in hardware
     #define HAVE_FAST_LONGLONG
   #endif
@@ -65,11 +61,9 @@
   #define intLsize 32
   typedef sint32 sintL;
   typedef uint32 uintL;
-  #ifdef HAVE_LONGLONG
-    #define intQsize 64
-    typedef sint64 sintQ;
-    typedef uint64 uintQ;
-  #endif
+  #define intQsize 64
+  typedef sint64 sintQ;
+  typedef uint64 uintQ;
 
 // Type for three values (0, +1, -1).
   typedef int  cl_signean;
@@ -91,7 +85,7 @@
 
 // Integer type used for lfloat exponents.
 // Constraint: sizeof(uintE) >= sizeof(uintC)
-  #if (defined(HAVE_LONGLONG) && (defined(__alpha__) || defined(__ia64__) || defined(__powerpc64__) || defined(__s390x__) || (defined(__sparc__) && defined(__arch64__)) || defined(__x86_64__) || defined(__i386__) || defined(__mips__) || defined(__rs6000__) || defined(__aarch64__) || (defined(__riscv) && __riscv_xlen == 64) || defined(__e2k__)))
+  #if (defined(__alpha__) || defined(__ia64__) || defined(__powerpc64__) || defined(__s390x__) || (defined(__sparc__) && defined(__arch64__)) || defined(__x86_64__) || defined(__i386__) || defined(__mips__) || defined(__rs6000__) || defined(__aarch64__) || (defined(__riscv) && __riscv_xlen == 64) || defined(__e2k__))
     #define intEsize 64
     typedef sint64  sintE;
     typedef uint64  uintE;

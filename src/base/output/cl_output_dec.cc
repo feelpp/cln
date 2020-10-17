@@ -58,8 +58,6 @@ void fprintdecimal (std::ostream& stream, long x)
         fprintdecimal_impl(stream,(intptr_t)x);
 }
 
-#ifdef HAVE_LONGLONG
-
 void fprintdecimal (std::ostream& stream, unsigned long long x)
 {
 #if long_long_bitsize <= pointer_bitsize
@@ -93,7 +91,5 @@ void fprintdecimal (std::ostream& stream, long long x)
 	}
 #endif
 }
-
-#endif
 
 }  // namespace cln

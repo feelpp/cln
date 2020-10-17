@@ -77,8 +77,6 @@ inline uint32 highlow32_0 (uint16 high)
 	return (uint32)high << 16;
 }
 
-#ifdef HAVE_LONGLONG
-
 // High-Word einer 64-Bit-Zahl bestimmen
 // high32(wert)
 inline uint32 high32 (uint64 wert)
@@ -106,8 +104,6 @@ inline uint64 highlow64_0 (uint32 high)
 {
 	return (uint64)high << 32;
 }
-
-#endif /* HAVE_LONGLONG */
 
 
 // Multipliziert zwei 16-Bit-Zahlen miteinander und liefert eine 32-Bit-Zahl:
@@ -287,7 +283,7 @@ inline uint32 mulu32_unchecked (uint32 arg1, uint32 arg2)
               );                                      \
        unused (hi_zuweisung _hi); lo_zuweisung _lo;   \
      })
-#elif defined(__GNUC__) && defined(HAVE_LONGLONG) && !defined(__arm__)
+#elif defined(__GNUC__) && !defined(__arm__)
   #define mulu32(x,y,hi_zuweisung,lo_zuweisung)  \
     ({ var register uint64 _prod = (uint64)(uint32)(x) * (uint64)(uint32)(y); \
        unused (hi_zuweisung (uint32)(_prod>>32));                             \
@@ -759,7 +755,7 @@ inline uint32 mulu32_unchecked (uint32 arg1, uint32 arg2)
      })
   #define divu_6432_3232_(xhi,xlo,y) \
     ({var uint32 ___q; divu_6432_3232(xhi,xlo,y,___q=,); ___q; })
-#elif defined(__GNUC__) && defined(HAVE_LONGLONG) && !defined(__arm__)
+#elif defined(__GNUC__) && !defined(__arm__)
   #define divu_6432_3232(xhi,xlo,y,q_zuweisung,r_zuweisung) \
     ({var uint32 __xhi = (xhi);						\
       var uint32 __xlo = (xlo);						\
@@ -1254,13 +1250,11 @@ inline uint32 mulu32_unchecked (uint32 arg1, uint32 arg2)
 // < uintL ergebnis : Wurzel, >=0, <2^16
   extern uintL isqrt (uintL x);
 
-#ifdef HAVE_LONGLONG
 // Extracts integer root of a 64-bit number and returns a 32-bit number.
 // isqrt(x)
 // > uintQ x : radicand, >=0, <2^64
 // < uintL result : square root, >=0, <2^32
   extern uintL isqrt (uintQ x);
-#endif
 
 // Sorry for this. We need an isqrt function taking uintC arguments but we
 // cannot use overloading since this would lead to ambiguities with any of the

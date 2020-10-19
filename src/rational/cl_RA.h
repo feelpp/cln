@@ -46,7 +46,7 @@ inline cl_RA::cl_RA (cl_heap_ratio* ptr)
 
 // Type tests.
 inline bool rationalp (const cl_RA& x)
-	{ unused x; return true; }
+	{ cl_unused x; return true; }
 inline bool integerp (const cl_RA& x)
 {
 	if (!x.pointer_p())
@@ -75,9 +75,9 @@ public:
 };
 
 inline bool integerp (const cl_RT& x)
-	{ unused x; return false; }
+	{ cl_unused x; return false; }
 inline bool ratiop (const cl_RT& x)
-	{ unused x; return true; }
+	{ cl_unused x; return true; }
 
 // Access numerator and denominator.
 inline const cl_I& numerator (const cl_RT& x)
@@ -104,7 +104,7 @@ inline bool minusp (const cl_RA& x)
 
 // (ZEROP x) == (= x 0)
 inline bool zerop (const cl_RT& x)
-	{ unused x; return false; }
+	{ cl_unused x; return false; }
 inline bool zerop (const cl_RA& x)
 {
 	return x.word == cl_combine(cl_FN_tag,0);

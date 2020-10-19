@@ -180,7 +180,7 @@ static cl_GV_I_vectorops bits##m##_vectorops = {{			\
 
 static void bits_do_delete (cl_GV_inner<cl_I>* vec)
 {
-	unused vec;
+	cl_unused vec;
 }
 
 // Copy bits srcptr.bits[srcindex..srcindex+count-1] into destptr.bits[destindex..destindex+count-1].

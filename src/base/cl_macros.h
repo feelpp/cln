@@ -65,11 +65,11 @@
   #define TRUE   1
 
 // Ignore a value (instead of assigning it to a variable).
-// unused ...
+// cl_unused ...
   #if defined(__GNUC__) || defined(__KCC) // avoid a gcc warning "statement with no effect"
-    #define unused  (void)
+    #define cl_unused  (void)
   #else
-    #define unused
+    #define cl_unused
   #endif
 
 // Denotes a point where control flow can never arrive.
@@ -246,7 +246,7 @@
     /* Ability to place an object at a given address. */		\
 public:									\
     void* operator new (size_t size) { return malloc_hook(size); }	\
-    void* operator new (size_t size, classname* ptr) { unused size; return ptr; } \
+    void* operator new (size_t size, classname* ptr) { cl_unused size; return ptr; } \
     void operator delete (void* ptr) { free_hook(ptr); }
 
 // init1(type, object) (value);

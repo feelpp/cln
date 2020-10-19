@@ -250,7 +250,7 @@ not_rational_syntax:
 		,	if (!(flags.syntax & syntax_sfloat)) goto not_float_syntax;
 		,	if (!(flags.syntax & syntax_ffloat)) goto not_float_syntax;
 		,	if (!(flags.syntax & syntax_dfloat)) goto not_float_syntax;
-		,	unused len;
+		,	cl_unused len;
 			if (!(flags.syntax & syntax_lfloat)) goto not_float_syntax;
 		);
 		return read_complex_number_rest(flags,ptr_after_prec,string,string_limit,end_of_parse,
@@ -301,7 +301,7 @@ not_complex_syntax:
 
 static const cl_N read_complex_number_rest (const cl_read_flags& flags, const char * string_rest, const char * string, const char * string_limit, const char * * end_of_parse, const cl_R& x)
 {
-	unused string;
+	cl_unused string;
 	if ((flags.syntax & syntax_complex) && (flags.lsyntax & lsyntax_algebraic)) {
 		// Finish reading the "+yi" part of "x+yi".
 		// We allow "y" to begin with a '-'.

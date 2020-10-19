@@ -2495,12 +2495,12 @@ inline uintD divucopy_loop_down (uintD digit, const uintD* sourceptr, uintD* des
 #define num_stack_array(need,low_zuweisung,high_zuweisung)  \
   {var uintC __need = (uintC)(need);				\
    var uintD* __array = cl_alloc_array(uintD,__need);		\
-   unused (low_zuweisung &__array[0]); unused (high_zuweisung &__array[__need]); \
+   cl_unused (low_zuweisung &__array[0]); cl_unused (high_zuweisung &__array[__need]); \
   }
 #define num_stack_small_array(need,low_zuweisung,high_zuweisung)  \
   {var uintC __need = (uintC)(need);				\
    var uintD* __array = cl_small_alloc_array(uintD,__need);	\
-   unused (low_zuweisung &__array[0]); unused (high_zuweisung &__array[__need]); \
+   cl_unused (low_zuweisung &__array[0]); cl_unused (high_zuweisung &__array[__need]); \
   }
 #if CL_DS_BIG_ENDIAN_P
   #define num_stack_alloc(need,MSDptr_zuweisung,LSDptr_zuweisung)  \
@@ -2591,7 +2591,7 @@ extern void cl_UDS_mul_square (const uintD* sourceptr, uintC len,
   #define UDS_UDS_mul_UDS(len1,LSDptr1,len2,LSDptr2, MSDptr_zuweisung,len_zuweisung,LSDptr_zuweisung)  \
     var uintC CONCAT(len_from_UDSmul_,__LINE__) = (uintC)(len1) + (uintC)(len2); \
     var uintD* CONCAT(LSDptr_from_UDSmul_,__LINE__);				\
-    unused (len_zuweisung CONCAT(len_from_UDSmul_,__LINE__));			\
+    cl_unused (len_zuweisung CONCAT(len_from_UDSmul_,__LINE__));			\
     num_stack_alloc(CONCAT(len_from_UDSmul_,__LINE__),MSDptr_zuweisung,LSDptr_zuweisung CONCAT(LSDptr_from_UDSmul_,__LINE__) =); \
     cl_UDS_mul((LSDptr1),(len1),(LSDptr2),(len2),CONCAT(LSDptr_from_UDSmul_,__LINE__));
 
@@ -2616,7 +2616,7 @@ extern void cl_UDS_mul_square (const uintD* sourceptr, uintC len,
     var uintD* MSDptr0;							\
     var uintD* LSDptr0;							\
     var uintC len_from_DSmal = (uintC)(len1) + (uintC)(len2);		\
-    unused (len_zuweisung len_from_DSmal);				\
+    cl_unused (len_zuweisung len_from_DSmal);				\
     num_stack_alloc(len_from_DSmal,MSDptr_zuweisung MSDptr0 =,LSDptr_zuweisung LSDptr0 =); \
     var uintD MSD1_from_DSmal = mspref(MSDptr1,0);			\
     var uintD MSD2_from_DSmal = mspref(MSDptr2,0);			\

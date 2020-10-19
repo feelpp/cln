@@ -161,7 +161,7 @@ const cl_F read_float (const cl_read_flags& flags, const char * string, const ch
 		,	if (!(flags.syntax & syntax_sfloat)) goto not_float_syntax;
 		,	if (!(flags.syntax & syntax_ffloat)) goto not_float_syntax;
 		,	if (!(flags.syntax & syntax_dfloat)) goto not_float_syntax;
-		,	unused len;
+		,	cl_unused len;
 			if (!(flags.syntax & syntax_lfloat)) goto not_float_syntax;
 		);
 		at_end_of_parse(ptr_after_prec);

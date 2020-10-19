@@ -142,7 +142,7 @@ protected:
     }
 private:
     // Default function to make room in a hash table.
-    static bool no_garcol (cl_heap* ht) { unused ht; return false; }
+    static bool no_garcol (cl_heap* ht) { cl_unused ht; return false; }
 };
 
 template <class htentry>

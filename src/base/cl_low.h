@@ -122,7 +122,7 @@ inline uint32 mulu16 (uint16 arg1, uint16 arg2)
 #elif defined(__GNUC__) && defined(__sparc64__) && !defined(NO_ASM)
 inline uint32 mulu16 (uint16 arg1, uint16 arg2)
 {
-	register uint64 _prod;
+	uint64 _prod;
 	__asm__("umul %1,%2,%0"
 		: "=r" (_prod)
 		: "r" (arg1), "r" (arg2)
@@ -132,8 +132,8 @@ inline uint32 mulu16 (uint16 arg1, uint16 arg2)
 #elif defined(__GNUC__) && (defined(__i386__) || defined(__x86_64__)) && !defined(NO_ASM)
 inline uint32 mulu16 (uint16 arg1, uint16 arg2)
 {
-	register uint16 _hi;
-	register uint16 _lo;
+	uint16 _hi;
+	uint16 _lo;
 	__asm__("mulw %2"
 		: "=d" /* %dx */ (_hi), "=a" /* %ax */ (_lo)
 		: "rm" (arg1), "1" /* %eax */ (arg2)
@@ -176,7 +176,7 @@ inline uint32 mulu16 (uint16 arg1, uint16 arg2)
 #if defined(__GNUC__) && defined(__sparc64__) && !defined(NO_ASM)
 inline uint32 mulu32_unchecked (uint32 arg1, uint32 arg2)
 {
-	register uint64 _prod;
+	uint64 _prod;
 	__asm__("umul %1,%2,%0"
 		: "=r" (_prod)
 		: "r" (arg1), "r" (arg2)
@@ -238,7 +238,7 @@ inline uint32 mulu32_unchecked (uint32 arg1, uint32 arg2)
      })
 #elif defined(__GNUC__) && defined(__sparc64__) && !defined(NO_ASM)
   #define mulu32(x,y,hi_zuweisung,lo_zuweisung)  \
-    ({ var register uint64 _prod;				\
+    ({ var uint64 _prod;				\
        __asm__("umul %1,%2,%0"					\
 	       : "=r" (_prod)					\
 	       : "r" ((uint32)(x)), "r" ((uint32)(y))		\
@@ -249,19 +249,19 @@ inline uint32 mulu32_unchecked (uint32 arg1, uint32 arg2)
 #elif defined(__GNUC__) && defined(__sparc__) && !defined(NO_ASM)
   #define mulu32(x,y,hi_zuweisung,lo_zuweisung)  \
     ({ lo_zuweisung mulu32_(x,y); /* extern in Assembler */	\
-      {var register uint32 _hi __asm__("%g1");			\
+      {var uint32 _hi __asm__("%g1");			\
        cl_unused (hi_zuweisung _hi);				\
      }})
 #elif defined(__GNUC__) && defined(__arm__) && 0 // see comment cl_asm_arm.cc
   #define mulu32(x,y,hi_zuweisung,lo_zuweisung)  \
     ({ lo_zuweisung mulu32_(x,y); /* extern in Assembler */	\
-      {var register uint32 _hi __asm__("%r1"/*"%a2"*/);		\
+      {var uint32 _hi __asm__("%r1"/*"%a2"*/);		\
        cl_unused (hi_zuweisung _hi);				\
      }})
 #elif defined(__GNUC__) && (defined(__i386__) || defined(__x86_64__)) && !defined(NO_ASM)
   #define mulu32(x,y,hi_zuweisung,lo_zuweisung)  \
-    ({ var register uint32 _hi;                                  \
-       var register uint32 _lo;                                  \
+    ({ var uint32 _hi;                                  \
+       var uint32 _lo;                                  \
        __asm__("mull %2"                                         \
                : "=d" /* %edx */ (_hi), "=a" /* %eax */ (_lo)    \
                : "g" ((uint32)(x)), "1" /* %eax */ ((uint32)(y)) \
@@ -275,8 +275,8 @@ inline uint32 mulu32_unchecked (uint32 arg1, uint32 arg2)
     #define MULTU_HI_LO "multu %3,%2 ; mfhi %0 ; mflo %1"
   #endif
   #define mulu32(x,y,hi_zuweisung,lo_zuweisung)  \
-    ({ var register uint32 _hi;                       \
-       var register uint32 _lo;                       \
+    ({ var uint32 _hi;                       \
+       var uint32 _lo;                       \
        __asm__(MULTU_HI_LO                            \
                : "=r" (_hi), "=r" (_lo)               \
                : "r" ((uint32)(x)), "r" ((uint32)(y)) \
@@ -285,14 +285,14 @@ inline uint32 mulu32_unchecked (uint32 arg1, uint32 arg2)
      })
 #elif defined(__GNUC__) && !defined(__arm__)
   #define mulu32(x,y,hi_zuweisung,lo_zuweisung)  \
-    ({ var register uint64 _prod = (uint64)(uint32)(x) * (uint64)(uint32)(y); \
+    ({ var uint64 _prod = (uint64)(uint32)(x) * (uint64)(uint32)(y); \
        cl_unused (hi_zuweisung (uint32)(_prod>>32));                             \
        lo_zuweisung (uint32)(_prod);                                          \
      })
 #elif defined(WATCOM) && defined(__i386__) && !defined(NO_ASM)
   #define mulu32(x,y,hi_zuweisung,lo_zuweisung)  \
-    { var register uint32 _hi;                     \
-      var register uint32 _lo;                     \
+    { var uint32 _hi;                     \
+      var uint32 _lo;                     \
       _lo = mulu32_(x,y), _hi = mulu32_high_();    \
       cl_unused (hi_zuweisung _hi); lo_zuweisung _lo; \
     }
@@ -324,7 +324,7 @@ inline uint32 mulu32_unchecked (uint32 arg1, uint32 arg2)
 #if defined(__GNUC__) && defined(__sparc64__) && !defined(NO_ASM)
   // Prefer the umul instruction over the mulx instruction (overkill).
   #define mulu32_w(x,y)  \
-    ({ var register uint64 _prod;				\
+    ({ var uint64 _prod;				\
        __asm__("umul %1,%2,%0"					\
 	       : "=r" (_prod)					\
 	       : "r" ((uint32)(x)), "r" ((uint32)(y))		\
@@ -351,10 +351,10 @@ inline uint32 mulu32_unchecked (uint32 arg1, uint32 arg2)
 #endif
 #if defined(__GNUC__) && defined(__alpha__) && !defined(NO_ASM)
   #define mulu64(x,y,hi_zuweisung,lo_zuweisung)  \
-    ({ var register uint64 _x = (x);	\
-       var register uint64 _y = (y);	\
-       var register uint64 _hi;		\
-       var register uint64 _lo;		\
+    ({ var uint64 _x = (x);	\
+       var uint64 _y = (y);	\
+       var uint64 _hi;		\
+       var uint64 _lo;		\
        __asm__("mulq %1,%2,%0"		\
                : "=r" (_lo)		\
                : "r" (_x), "r" (_y)	\
@@ -369,13 +369,13 @@ inline uint32 mulu32_unchecked (uint32 arg1, uint32 arg2)
 #elif defined(__GNUC__) && defined(__sparc64__) && !defined(NO_ASM)
   #define mulu64(x,y,hi_zuweisung,lo_zuweisung)  \
     ({ lo_zuweisung mulu64_(x,y); /* extern in Assembler */	\
-      {var register uint64 _hi __asm__("%g2");			\
+      {var uint64 _hi __asm__("%g2");			\
        cl_unused (hi_zuweisung _hi);				\
      }})
 #elif defined(__GNUC__) && defined(__x86_64__) && !defined(NO_ASM)
   #define mulu64(x,y,hi_zuweisung,lo_zuweisung)	 \
-    ({ var register uint64 _hi;                                   \
-       var register uint64 _lo;                                   \
+    ({ var uint64 _hi;                                   \
+       var uint64 _lo;                                   \
        __asm__("mulq %2"                                          \
                : "=d" /* %rdx */ (_hi), "=a" /* %rax */ (_lo)     \
                : "rm" ((uint64)(x)), "1" /* %rax */ ((uint64)(y)) \
@@ -384,9 +384,9 @@ inline uint32 mulu32_unchecked (uint32 arg1, uint32 arg2)
      })
 #elif defined(__GNUC__) && defined(__ia64__) && !defined(NO_ASM)
   #define mulu64(x,y,hi_zuweisung,lo_zuweisung)	 \
-    ({ var register uint64 _x = (x);					    \
-       var register uint64 _y = (y);					    \
-       var register uint64 _hi;						    \
+    ({ var uint64 _x = (x);					    \
+       var uint64 _y = (y);					    \
+       var uint64 _hi;						    \
        __asm__("xma.hu %0 = %1, %2, f0"					    \
                : "=f" (_hi)						    \
                : "f" ((uint64)(_x)), "f" ((uint64)(_y))			    \
@@ -492,7 +492,7 @@ inline uint32 mulu32_unchecked (uint32 arg1, uint32 arg2)
 #elif defined(__GNUC__) && defined(__arm__) && 0 // see comment cl_asm_arm.cc
   #define divu_3216_1616(x,y,q_zuweisung,r_zuweisung)  \
     { var uint32 __q = divu_3216_1616_(x,y); /* extern in Assembler */	\
-      var register uint32 __r __asm__("%r1"/*"%a2"*/);			\
+      var uint32 __r __asm__("%r1"/*"%a2"*/);			\
       cl_unused (q_zuweisung __q); r_zuweisung __r;			\
     }
 #elif defined(__GNUC__) && !defined(__arm__)
@@ -729,13 +729,13 @@ inline uint32 mulu32_unchecked (uint32 arg1, uint32 arg2)
 #elif defined(__GNUC__) && (defined(__sparc__) || defined(__sparc64__)) && !defined(NO_ASM)
   #define divu_6432_3232(xhi,xlo,y,q_zuweisung,r_zuweisung)  \
     ({ var uint32 _q = divu_6432_3232_(xhi,xlo,y); /* extern in Assembler */\
-       var register uint32 _r __asm__("%g1");				    \
+       var uint32 _r __asm__("%g1");				    \
        cl_unused (q_zuweisung _q); r_zuweisung _r;				    \
      })
 #elif defined(__GNUC__) && defined(__arm__) && 0 // see comment cl_asm_arm.cc
   #define divu_6432_3232(xhi,xlo,y,q_zuweisung,r_zuweisung)  \
     ({ var uint32 _q = divu_6432_3232_(xhi,xlo,y); /* extern in Assembler */\
-       var register uint32 _r __asm__("%r1"/*"%a2"*/);			    \
+       var uint32 _r __asm__("%r1"/*"%a2"*/);			    \
        cl_unused (q_zuweisung _q); r_zuweisung _r;				    \
      })
 #elif defined(__GNUC__) && (defined(__i386__) || defined(__x86_64__)) && !defined(NO_ASM)

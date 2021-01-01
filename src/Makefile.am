@@ -54,7 +54,6 @@ base/digitseq/cl_DS_recipsqrt.cc \
 base/digitseq/cl_DS_sqrt.cc \
 base/digitseq/cl_DS_trandom.cc \
 base/digitseq/cl_asm.h \
-base/digitseq/cl_asm.S \
 base/hash/cl_hash.h \
 base/hash/cl_hash1.h \
 base/hash/cl_hash1weak.h \
@@ -744,7 +743,6 @@ polynomial/elem/cl_UP_named.cc \
 polynomial/elem/cl_UP_no_ring.cc \
 polynomial/elem/cl_UP_number.h \
 polynomial/elem/cl_UP_unnamed.cc \
-polynomial/elem/cl_asm_GF2.S \
 polynomial/misc/cl_UP_I_hermite.cc \
 polynomial/misc/cl_UP_I_laguerre.cc \
 polynomial/misc/cl_UP_I_tchebychev.cc \
@@ -948,8 +946,13 @@ vector/output/cl_GV_number_aprint.cc \
 vector/output/cl_SV_aprint.cc \
 vector/output/cl_SV_number_aprint.cc
 
+nodist_libcln_la_SOURCES = \
+base/digitseq/cl_asm.S \
+polynomial/elem/cl_asm_GF2.S
+
 
 ASMFILES = \
+base/digitseq/cl_asm_.cc \
 base/digitseq/cl_asm_arm.h \
 base/digitseq/cl_asm_arm_.cc \
 base/digitseq/cl_asm_hppa.h \
@@ -966,8 +969,16 @@ base/digitseq/cl_asm_sparc64.h \
 base/digitseq/cl_asm_sparc64_.cc \
 base/digitseq/cl_asm_sparc_.cc
 
+base/digitseq/cl_asm.S: $(ASMFILES)
+	$(MKDIR_P) base/digitseq; cp $< $@
+
 MORE_ASMFILES = \
+polynomial/elem/cl_asm_GF2.cc \
 polynomial/elem/cl_asm_sparc_GF2.cc
+
+
+polynomial/elem/cl_asm_GF2.S: $(MORE_ASMFILES)
+	$(MKDIR_P) polynomial/elem; cp $< $@
 
 EXTRA_DIST = $(ASMFILES) $(MORE_ASMFILES)
 

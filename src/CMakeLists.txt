@@ -988,11 +988,6 @@ target_include_directories(cln
 	${CMAKE_CURRENT_BINARY_DIR}
 )
 
-target_compile_definitions(cln
-	PRIVATE
-	-DCL_CPU_BIG_ENDIAN_P=${cln_cpu_big_endian}
-)
-
 install(TARGETS cln
 	EXPORT cln-exports
 	LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"

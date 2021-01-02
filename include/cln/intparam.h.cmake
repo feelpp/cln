@@ -7,3 +7,9 @@
 // #endif
 #define pointer_bitsize @cl_pointer_bitsize@ 
 #define stack_grows_down
+#cmakedefine short_little_endian
+#cmakedefine int_little_endian
+#cmakedefine long_little_endian
+#cmakedefine short_big_endian
+#cmakedefine int_big_endian
+#cmakedefine long_big_endian

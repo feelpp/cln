@@ -50,7 +50,6 @@ set(cln_sources
 	base/digitseq/cl_DS_sqrt.cc
 	base/digitseq/cl_DS_trandom.cc
 	base/digitseq/cl_asm.h
-	base/digitseq/cl_asm.S
 	base/hash/cl_hash.h
 	base/hash/cl_hash1.h
 	base/hash/cl_hash1weak.h
@@ -944,12 +943,16 @@ set(cln_sources
 	vector/output/cl_SV_number_aprint.cc
 )
 
-set(asm_sources base/digitseq/cl_asm.S)
-set_source_files_properties(${asm_sources} PROPERTIES
-	LANGUAGE C
-	COMPILE_FLAGS "${ASM_NOEXECSTACK_FLAG}")
+if (CMAKE_CXX_COMPILER_ID MATCHES "GNU" OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+	set(cln_asm_sources base/digitseq/cl_asm_.cc)
+	set_source_files_properties(${cln_asm_sources} PROPERTIES
+		LANGUAGE C
+		COMPILE_FLAGS "-x assembler-with-cpp ${ASM_NOEXECSTACK_FLAG}"
+	)
+	message(STATUS "enabling cl_asm.cc")
+endif()
 
-add_library(cln ${cln_sources})
+add_library(cln ${cln_sources} ${cln_asm_sources})
 add_library(cln::cln ALIAS cln)
 # The incantation below tells CMake to set the correct SONAME and use
 # the conventional libcln.so.SONAME.X.Y file name. The variables
@@ -960,6 +963,10 @@ set_target_properties(cln PROPERTIES
 	VERSION ${libcln_version})
 if (CLN_USE_GMP)
 	target_link_libraries(cln PRIVATE gmp::gmp)
+endif()
+if (NOT cln_asm_sources)
+	message(STATUS "disabling asm loops (only GCC and Clang are supported)")
+	target_compile_definitions(cln PRIVATE NO_ASM NO_ASM_LOOPS)
 endif()
 
 if (WIN32 AND CMAKE_COMPILER_IS_GNUCXX AND BUILD_SHARED_LIBS)

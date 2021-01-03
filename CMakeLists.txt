@@ -32,7 +32,7 @@ set(cl_config_files
 	include/cln/config.h
 	include/cln/host_cpu.h
 	include/cln/intparam.h
-	src/cl_config.h
+	autoconf/cl_config.h
 	src/base/cl_base_config.h
 	src/base/cl_gmpconfig.h
 	src/timing/cl_t_config.h

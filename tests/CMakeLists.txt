@@ -49,6 +49,7 @@ macro(add_cln_test thename)
 		PRIVATE
 		${CMAKE_CURRENT_SOURCE_DIR}/../src
 		${CMAKE_CURRENT_BINARY_DIR}/../src
+		${CMAKE_CURRENT_BINARY_DIR}/../autoconf
 	)
 	add_dependencies(test_suite ${thename})
 	add_dependencies(check ${thename})

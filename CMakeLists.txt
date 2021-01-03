@@ -19,6 +19,13 @@ math(EXPR libcln_soversion "${cl_lt_current} - ${cl_lt_age}")
 set(libcln_version ${libcln_soversion}.${cl_lt_age}.${cl_lt_revision})
 option(CLN_USE_GMP "Use GMP low level routines" ON)
 
+if (EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/config.status
+		OR EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/libtool)
+	message(FATAL_ERROR
+		"Source directory has been already configured by configure script. "
+		"Please run `make distclean` in ${CMAKE_CURRENT_SOURCE_DIR} and try again."
+	)
+endif()
 include(GNUInstallDirs)
 
 set(cl_config_files

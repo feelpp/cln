@@ -64,6 +64,8 @@ AC_PROG_LIBTOOL
 
 LT_VERSION_INFO=cl_lt_version
 AC_SUBST(LT_VERSION_INFO)
+CL_VERSION=cl_version
+AC_SUBST(CL_VERSION)
 
 dnl           checks for compiler characteristics
 dnl

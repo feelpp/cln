@@ -41,7 +41,7 @@ Installation from a source .tar.bz2 distribution
 6) Install CLN
 
    [become root if necessary]
-   # make install
+   # cmake --build . -t install
 
 
 Installation from git

@@ -10,8 +10,16 @@ esyscmd([grep "^#define $1 " $2 /dev/null 2>/dev/null]),
 [^.*$1[ 	]+],[]),
 [[
  	]*$],[])])
-define(CL_GET_VERSION,
-[CL_HEADER_GETVAL(CL_VERSION_$1,[include/cln/version.h])])
-define(CL_GET_LTVERSION,
-[CL_HEADER_GETVAL(CL_LT_$1,[include/cln/version.h])])
 
+
+dnl CL_GET_VERSION
+dnl The CLN version number, extracted from #defines at autoconf time.
+
+AC_DEFUN([CL_GET_VERSION],
+[CL_HEADER_GETVAL(CL_VERSION_$1,[include/cln/version.h])])
+
+dnl CL_GET_LTVERSION
+dnl The CLN library version number, extracted from #defines at autoconf time.
+
+AC_DEFUN([CL_GET_LTVERSION],
+[CL_HEADER_GETVAL(CL_LT_$1,[include/cln/version.h])])

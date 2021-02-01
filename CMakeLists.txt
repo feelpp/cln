@@ -91,13 +91,10 @@ if (GMP_FOUND)
 endif(GMP_FOUND)
 
 
-check_type_size("long long" LONGLONG)
-if (HAVE_LONGLONG)
-	set(SIZEOF_LONGLONG ${LONGLONG})
-endif()
 check_type_size("short" SIZEOF_SHORT)
 check_type_size("int" SIZEOF_INT)
 check_type_size("long" SIZEOF_LONG)
+check_type_size("long long" SIZEOF_LONGLONG)
 check_type_size("void *" SIZEOF_VOIDP)
 check_type_align("void *" ALIGNOF_VOIDP)
 
@@ -107,10 +104,8 @@ math(EXPR x "${SIZEOF_SHORT} * ${cl_char_bitsize}")
 set(cl_short_bitsize ${x} CACHE INTERNAL "short_bitsize")
 math(EXPR cl_int_bitsize "${SIZEOF_INT} * ${cl_char_bitsize}")
 math(EXPR cl_long_bitsize "${SIZEOF_LONG} * ${cl_char_bitsize}")
+math(EXPR cl_long_long_bitsize "${SIZEOF_LONGLONG} * ${cl_char_bitsize}")
 math(EXPR cl_pointer_bitsize "${SIZEOF_VOIDP} * ${cl_char_bitsize}")
-if (HAVE_LONGLONG)
-	math(EXPR cl_long_long_bitsize "${SIZEOF_LONGLONG} * ${cl_char_bitsize}")
-endif()
 
 
 check_include_file("unistd.h" HAVE_UNISTD_H)

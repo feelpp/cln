@@ -502,41 +502,12 @@ void main9(void) {
       else                                                                                       \
       { printf("#error \"Endianness makes no sense for type %s !!\"\n",typestr); }               \
   }
-  get_endian(uchar,"unsigned char",uchar_bitsize);
   get_endian(ushort,"unsigned short",ushort_bitsize);
   get_endian(uint,"unsigned int",uint_bitsize);
   get_endian(ulong,"unsigned long",ulong_bitsize);
   get_endian(ulonglong,"unsigned long long",ulonglong_bitsize);
   printf("\n");
 }
-
-long get_stack_direction(void)
-  { char dummy;
-    static char* dummyaddr = (char*)0;
-    if (!(dummyaddr == (char*)0))
-      { return (&dummy) - dummyaddr; }
-    else
-      { dummyaddr = &dummy;
-        { long result = get_stack_direction();
-          /* The next assignment avoids tail recursion elimination (IRIX 6.4 CC). */
-          dummyaddr = (char*)0;
-          return result;
-      } }
-  }
-
-void main10(void)
-  { long stack_direction = get_stack_direction();
-    if (stack_direction > 0)
-      { printf("/* Stack grows up, ca. %ld bytes per function call. */\n",(long)stack_direction);
-        printf("#define stack_grows_up\n");
-      }
-    else if (stack_direction < 0)
-      { printf("/* Stack grows down, ca. %ld bytes per function call. */\n",-(long)stack_direction);
-        printf("#define stack_grows_down\n");
-      }
-    else
-      printf("#error \"Unknown stack model -- incorrect C semantics!!\"\n");
-  }
 
 int main(int argc, char *argv[])
 { if (freopen(argc==1 ? "conftest.h" : argv[1], "w", stdout) == NULL) return 1;
@@ -549,7 +520,6 @@ int main(int argc, char *argv[])
   main7();
   main8();
   main9();
-  main10();
   if (ferror(stdout) || fclose(stdout)) return 1;
   return 0;
 }

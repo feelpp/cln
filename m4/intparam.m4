@@ -222,17 +222,6 @@ AC_DEFUN([CL_INTPARAM_CROSS],
         echo "#error \"Type long long is stored in memory in an obscure manner!!\""
         ;;
     esac
-    echo
-    case $host_cpu in
-      hppa)
-        echo "/* Stack grows up. */"
-        echo "#define stack_grows_up"
-        ;;
-      *)
-        echo "/* Stack grows down. */"
-        echo "#define stack_grows_down"
-        ;;
-    esac
   } > "$cl_machine_file_h"
 ])
 

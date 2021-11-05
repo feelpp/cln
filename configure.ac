@@ -11,8 +11,8 @@ m4_define([cl_lt_revision], CL_GET_LTVERSION([REVISION]))
 m4_define([cl_lt_age], CL_GET_LTVERSION([AGE]))
 m4_define([cl_lt_version], [cl_lt_current:cl_lt_revision:cl_lt_age])
 
-AC_INIT([cln], cl_version)
-AC_PREREQ(2.59)
+AC_INIT([cln],[cl_version])
+AC_PREREQ([2.69])
 AC_CONFIG_SRCDIR(src/integer/gcd/cl_I_gcd.cc)
 AC_CONFIG_AUX_DIR([build-aux])
 AC_CONFIG_MACRO_DIR([m4])
@@ -59,7 +59,7 @@ case $host_os in
      AC_ENABLE_SHARED
     ;;
 esac
-AC_PROG_LIBTOOL
+LT_INIT
                       dnl sets variable LIBTOOL
 
 LT_VERSION_INFO=cl_lt_version
@@ -93,8 +93,6 @@ ac_cv_func_ftime=no
                       dnl don't use ftime(3) even if it's available
 CL_RUSAGE
                       dnl DEFS HAVE_SYS_RESOURCE_H, HAVE_GETRUSAGE, HAVE_SYS_TIMES_H
-CL_PERROR
-                      dnl DEFS HAVE_PERROR_DECL
 CL_ATTRIBUTE_FLATTEN
                       dnl DEFS CL_HAVE_ATTRIBUTE_FLATTEN
 dnl
@@ -122,4 +120,5 @@ AC_LIB_LINKFLAGS_FROM_LIBS([CLNLIB_RPATH], [$CLNLIB_LIBS])
 dnl
 dnl           That's it.
 dnl
-AC_OUTPUT([Makefile src/Makefile tests/Makefile examples/Makefile doc/Makefile benchmarks/Makefile cln.spec cln.pc])
+AC_CONFIG_FILES([Makefile src/Makefile tests/Makefile examples/Makefile doc/Makefile benchmarks/Makefile cln.spec cln.pc])
+AC_OUTPUT

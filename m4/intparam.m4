@@ -104,7 +104,7 @@ AC_DEFUN([CL_INTPARAM_CROSS],
     AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[#include <stdint.h>]],
       [[typedef int verify[2*(sizeof(char*)<=sizeof (intptr_t))-1];]])],
       [], [echo "#error \"Type char * does not fit into an intptr_t!!\""])
-    _AC_COMPUTE_INT([sizeof (char *)], [pointer_size])
+    AC_COMPUTE_INT([pointer_size], [sizeof (char *)], [], [])
     pointer_bitsize=`expr $pointer_size '*' $char_bitsize`
     echo "/* Pointers of type char * have $pointer_bitsize bits. */"
     echo "#define pointer_bitsize $pointer_bitsize"
@@ -243,7 +243,7 @@ dnl CL_INTPARAM_SIZEOF(type, variable)
 dnl puts into variable the determined size of the type.
 AC_DEFUN([CL_INTPARAM_SIZEOF],
 [
-  _AC_COMPUTE_INT([sizeof($1)], [$2])
+  AC_COMPUTE_INT([$2], [sizeof($1)], [], [])
 ])
 
 dnl CL_INTPARAM_ALIGNOF(type, variable)

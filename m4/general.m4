@@ -7,57 +7,14 @@ dnl the same distribution terms as the rest of that program.
 
 dnl From Bruno Haible, Marcus Daniels, Sam Steingold.
 
-AC_PREREQ(2.13)
+AC_PREREQ([2.69])
 
-dnl without AC_MSG_...:   with AC_MSG_... and caching:
-dnl   AC_TRY_CPP          CL_CPP_CHECK
-dnl   AC_TRY_COMPILE      CL_COMPILE_CHECK
-dnl   AC_TRY_LINK         CL_LINK_CHECK
-dnl   AC_TRY_RUN          CL_RUN_CHECK - would require cross-compiling support
 dnl Usage:
-dnl AC_TRY_CPP(INCLUDES,
-dnl            ACTION-IF-FOUND [, ACTION-IF-NOT-FOUND])
-dnl CL_CPP_CHECK(ECHO-TEXT, CACHE-ID,
-dnl              INCLUDES,
-dnl              ACTION-IF-FOUND [, ACTION-IF-NOT-FOUND])
-dnl AC_TRY_xxx(INCLUDES, FUNCTION-BODY,
-dnl            ACTION-IF-FOUND [, ACTION-IF-NOT-FOUND])
-dnl CL_xxx_CHECK(ECHO-TEXT, CACHE-ID,
-dnl              INCLUDES, FUNCTION-BODY,
-dnl              ACTION-IF-FOUND [, ACTION-IF-NOT-FOUND])
-
-AC_DEFUN([CL_CPP_CHECK],
-[AC_MSG_CHECKING(for $1)
-AC_CACHE_VAL($2,[
-AC_TRY_CPP([$3], $2=yes, $2=no)
-])
-AC_MSG_RESULT([$]$2)
-if test [$]$2 = yes; then
-  ifelse([$4], , :, [$4])
-ifelse([$5], , , [else
-  $5
-])dnl
-fi
-])
-
-AC_DEFUN([CL_COMPILE_CHECK],
-[AC_MSG_CHECKING(for $1)
-AC_CACHE_VAL($2,[
-AC_TRY_COMPILE([$3],[$4], $2=yes, $2=no)
-])
-AC_MSG_RESULT([$]$2)
-if test [$]$2 = yes; then
-  ifelse([$5], , :, [$5])
-ifelse([$6], , , [else
-  $6
-])dnl
-fi
-])
-
+dnl CL_LINK_CHECK(ECHO-TEXT, CACHE-ID, INCLUDES, FUNCTION-BODY, ACTION-IF-FOUND [, ACTION-IF-NOT-FOUND])
 AC_DEFUN([CL_LINK_CHECK],
 [AC_MSG_CHECKING(for $1)
 AC_CACHE_VAL($2,[
-AC_TRY_LINK([$3],[$4], $2=yes, $2=no)
+AC_LINK_IFELSE([AC_LANG_PROGRAM([[$3]], [[$4]])], [$2=yes], [$2=no])
 ])
 AC_MSG_RESULT([$]$2)
 if test [$]$2 = yes; then
@@ -66,18 +23,6 @@ ifelse([$6], , , [else
   $6
 ])dnl
 fi
-])
-
-dnl CL_SILENT(ACTION)
-dnl performs ACTION, with AC_MSG_CHECKING and AC_MSG_RESULT being defined away.
-AC_DEFUN([CL_SILENT],
-[pushdef([AC_MSG_CHECKING],[:])dnl
-pushdef([AC_CHECKING],[:])dnl
-pushdef([AC_MSG_RESULT],[:])dnl
-$1[]dnl
-popdef([AC_MSG_RESULT])dnl
-popdef([AC_CHECKING])dnl
-popdef([AC_MSG_CHECKING])dnl
 ])
 
 dnl Expands to the "extern ..." prefix used for system declarations.
@@ -89,32 +34,8 @@ AC_DEFUN([AC_LANG_EXTERN],
 #endif
 ])
 
-AC_DEFUN([CL_CC_WORKS],
-[AC_CACHE_CHECK(whether CC works at all, cl_cv_prog_cc_works, [
-AC_LANG_SAVE()
-AC_LANG_C()
-AC_TRY_RUN([
-#include <stdlib.h>
-int main() { exit(0); }
-],
-cl_cv_prog_cc_works=yes, cl_cv_prog_cc_works=no,
-AC_TRY_LINK([], [], cl_cv_prog_cc_works=yes, cl_cv_prog_cc_works=no))
-AC_LANG_RESTORE()
-])
-case "$cl_cv_prog_cc_works" in
-  *no) echo "Installation or configuration problem: C compiler cannot create executables."; exit 1;;
-  *yes) ;;
-esac
-])
-
-AC_DEFUN([CL_CONFIG_SUBDIRS],
-[dnl No AC_CONFIG_AUX_DIR_DEFAULT, so we don't need install.sh.
-AC_PROVIDE([AC_CONFIG_AUX_DIR_DEFAULT])
-AC_CONFIG_SUBDIRS([$1])dnl
-])
-
 AC_DEFUN([CL_CANONICAL_HOST],
-[AC_REQUIRE([AC_PROG_CC]) dnl Actually: AC_REQUIRE([CL_CC_WORKS])
+[AC_REQUIRE([AC_PROG_CC])
 AC_CANONICAL_HOST
 ])
 

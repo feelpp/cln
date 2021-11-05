@@ -23,10 +23,6 @@
 /* Define if you have <sys/times.h>. */
 #undef HAVE_SYS_TIMES_H
 
-/* CL_PERROR */
-/* Define if <errno.h> or <stdio.h> contains a declaration for perror(). */
-#undef HAVE_PERROR_DECL
-
 
 #endif /* _CL_T_CONFIG_H */
 

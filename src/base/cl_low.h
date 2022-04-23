@@ -193,11 +193,31 @@ inline uint32 mulu32_unchecked (uint32 arg1, uint32 arg2)
   }
 #endif
 
+#ifdef __arm__
+// Returns the r0 part of a 64-bit (uint64) return value returned in r0,r1.
+// retval64_r0(value)
+// Returns the r1 part of a 64-bit (uint64) return value returned in r0,r1.
+// retval64_r1(value)
+  #ifdef __ARMEL__
+    /* little-endian ARM: uint64 retval = 2^32*r1+r0 */
+    #define retval64_r0(value)  ((uint32)(uint64)(value))
+    #define retval64_r1(value)  ((uint32)((uint64)(value)>>32))
+  #else
+    /* big-endian ARM: uint64 retval = 2^32*r0+r1 */
+    #define retval64_r0(value)  ((uint32)((uint64)(value)>>32))
+    #define retval64_r1(value)  ((uint32)(uint64)(value))
+  #endif
+#endif
+
 // Multipliziert zwei 32-Bit-Zahlen miteinander und liefert eine 64-Bit-Zahl:
 // mulu32(arg1,arg2,hi=,lo=);
 // > arg1, arg2 : zwei 32-Bit-Zahlen
 // < 2^32*hi+lo : eine 64-Bit-Zahl
+#if defined(__GNUC__) && defined(__arm__) && !defined(NO_ASM)
+  extern "C" uint64 mulu32_ (uint32 arg1, uint32 arg2);
+#else
   extern "C" uint32 mulu32_ (uint32 arg1, uint32 arg2); // -> Low-Teil
+#endif
 #ifdef _MSC_VER
   // Workaround MSVC compiler bug: extern "C" results in wrong symbols, when
   // declared inside a namespace!
@@ -252,12 +272,12 @@ inline uint32 mulu32_unchecked (uint32 arg1, uint32 arg2)
       {var uint32 _hi __asm__("%g1");			\
        cl_unused (hi_zuweisung _hi);				\
      }})
-#elif defined(__GNUC__) && defined(__arm__) && 0 // see comment cl_asm_arm.cc
+#elif defined(__GNUC__) && defined(__arm__) && !defined(NO_ASM)
   #define mulu32(x,y,hi_zuweisung,lo_zuweisung)  \
-    ({ lo_zuweisung mulu32_(x,y); /* extern in Assembler */	\
-      {var uint32 _hi __asm__("%r1"/*"%a2"*/);		\
-       cl_unused (hi_zuweisung _hi);				\
-     }})
+    ({ var register uint64 _prod = mulu32_(x,y);	\
+       hi_zuweisung retval64_r1(_prod);		\
+       lo_zuweisung retval64_r0(_prod);		\
+     })
 #elif defined(__GNUC__) && (defined(__i386__) || defined(__x86_64__)) && !defined(NO_ASM)
   #define mulu32(x,y,hi_zuweisung,lo_zuweisung)  \
     ({ var uint32 _hi;                                  \
@@ -434,6 +454,8 @@ inline uint32 mulu32_unchecked (uint32 arg1, uint32 arg2)
 // < x = q*y+r
 #if defined(__sparc__)
   extern "C" uint32 divu_3216_1616_ (uint32 x, uint16 y); // -> Quotient q, Rest r
+#elif defined(__GNUC__) && defined(__arm__) && !defined(NO_ASM)
+  extern "C" uint64 divu_3216_1616_ (uint32 x, uint16 y); // -> Quotient q, Rest r
 #else
   extern "C" uint16 divu_3216_1616_ (uint32 x, uint16 y); // -> Quotient q
 #ifdef _MSC_VER
@@ -489,11 +511,11 @@ inline uint32 mulu32_unchecked (uint32 arg1, uint32 arg2)
       cl_unused (q_zuweisung __q);						\
       r_zuweisung __r;							\
      })
-#elif defined(__GNUC__) && defined(__arm__) && 0 // see comment cl_asm_arm.cc
+#elif defined(__GNUC__) && defined(__arm__) && !defined(NO_ASM)
   #define divu_3216_1616(x,y,q_zuweisung,r_zuweisung)  \
-    { var uint32 __q = divu_3216_1616_(x,y); /* extern in Assembler */	\
-      var uint32 __r __asm__("%r1"/*"%a2"*/);			\
-      cl_unused (q_zuweisung __q); r_zuweisung __r;			\
+    { var uint64 __q = divu_3216_1616_(x,y); /* extern in Assembler */	\
+      q_zuweisung retval64_r0(__q);	\
+      r_zuweisung retval64_r1(__q);	\
     }
 #elif defined(__GNUC__) && !defined(__arm__)
   #define divu_3216_1616(x,y,q_zuweisung,r_zuweisung)  \
@@ -509,12 +531,6 @@ inline uint32 mulu32_unchecked (uint32 arg1, uint32 arg2)
       cl_unused (q_zuweisung low16(__qr));					\
       r_zuweisung high16(__qr);						\
     }
-#elif defined(__arm__) && !defined(NO_ASM)
-  #define divu_3216_1616(x,y,q_zuweisung,r_zuweisung)  \
-    { cl_unused (q_zuweisung divu_3216_1616_(x,y)); /* extern in Assembler */ \
-      r_zuweisung divu_16_rest;						   \
-    }
-  #define NEED_VAR_divu_16_rest
 #else
   #define divu_3216_1616(x,y,q_zuweisung,r_zuweisung)  \
     { cl_unused (q_zuweisung divu_3216_1616_(x,y)); r_zuweisung divu_16_rest; }
@@ -687,7 +703,11 @@ inline uint32 mulu32_unchecked (uint32 arg1, uint32 arg2)
 // < uint32 q: floor(x/y)
 // < uint32 r: x mod y
 // < x = q*y+r
+#if defined(__GNUC__) && defined(__arm__) && !defined(NO_ASM)
+  extern "C" uint64 divu_6432_3232_ (uint32 xhi, uint32 xlo, uint32 y); // -> Quotient q
+#else
   extern "C" uint32 divu_6432_3232_ (uint32 xhi, uint32 xlo, uint32 y); // -> Quotient q
+#endif
 #ifdef _MSC_VER
   // Workaround MSVC compiler bug.
 } extern "C" uint32 divu_32_rest; namespace cln {                       // -> Rest r
@@ -732,11 +752,11 @@ inline uint32 mulu32_unchecked (uint32 arg1, uint32 arg2)
        var uint32 _r __asm__("%g1");				    \
        cl_unused (q_zuweisung _q); r_zuweisung _r;				    \
      })
-#elif defined(__GNUC__) && defined(__arm__) && 0 // see comment cl_asm_arm.cc
+#elif defined(__GNUC__) && defined(__arm__) && !defined(NO_ASM)
   #define divu_6432_3232(xhi,xlo,y,q_zuweisung,r_zuweisung)  \
-    ({ var uint32 _q = divu_6432_3232_(xhi,xlo,y); /* extern in Assembler */\
-       var uint32 _r __asm__("%r1"/*"%a2"*/);			    \
-       cl_unused (q_zuweisung _q); r_zuweisung _r;				    \
+    ({ var uint64 _q = divu_6432_3232_(xhi,xlo,y); /* extern in Assembler */\
+       q_zuweisung retval64_r0(_q);	\
+       r_zuweisung retval64_r1(_q);	\
      })
 #elif defined(__GNUC__) && (defined(__i386__) || defined(__x86_64__)) && !defined(NO_ASM)
   #define divu_6432_3232(xhi,xlo,y,q_zuweisung,r_zuweisung)  \

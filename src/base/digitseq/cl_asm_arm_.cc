@@ -3278,12 +3278,15 @@ LABEL(mulusmall_loop_up_l1)
         MOV     a1,a4                   // return carry
         LDMFD   sp!,{v1,pc}
 #else
-        STMFD   sp!,{v1-v2,lr}
+        STMFD   sp!,{v1-v4,lr}
 LABEL(mulusmall_loop_up_l1)
         LDR     ip,[a2]
 
-//      BL      mulu32_64_vregs         // muluD(digit,*ptr,hi=,lo=)
-// replaced by multiplication of a small x = a1 and a big y = ip :
+#if 1
+        BL      mulu32_64_vregs         // muluD(digit,*ptr,hi=,lo=)
+#else
+// this code requires that digit is small, but this condition is violated in
+// digits_to_I_baseN(const char * MSBptr, uintC len, uintD base)
         MOV     v1,ip,LSR #16           // top half of y
         BIC     ip,ip,v1,LSL #16        // bottom half of y
         MUL     v2,a1,v1                // middle section of result
@@ -3291,14 +3294,14 @@ LABEL(mulusmall_loop_up_l1)
         MOV     ip,#0                   // high section of result
         ADDS    v1,v1,v2,LSL #16        // bottom 32 bits of result
         ADC     ip,ip,v2,LSR #16        // top 32 bits of result
-
+#endif
         ADDS    v1,v1,a4                // lo += carry
         ADC     a4,ip,#0                // if (lo<carry) { hi += 1 }; carry=hi
         STR     v1,[a2],#4              // *ptr++ = lo
         SUBS    a3,a3,#1                // len--
         BNE     mulusmall_loop_up_l1    // until len==0
         MOV     a1,a4                   // return carry
-        LDMFD   sp!,{v1-v2,pc}
+        LDMFD   sp!,{v1-v4,pc}
 #endif
 
 // extern void mulu_loop_up (uintD digit, uintD* sourceptr, uintD* destptr, uintC len);

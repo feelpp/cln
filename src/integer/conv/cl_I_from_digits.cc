@@ -134,6 +134,7 @@ static const cl_I digits_to_I_baseN (const char * MSBptr, uintC len, uintD base)
 			chx++;
 			len--;
 		}
+		// FIXME: mulusmall_loop_up/down are documented to require a small factor (<= 36).
 		var uintD carry = mulusmall_loop_lsp(factor,erg_LSDptr,erg_len,newdigit);
 		if (carry!=0) {
 			// need to extend NUDS:

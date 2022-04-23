@@ -141,6 +141,7 @@ GLABEL(divu_3216_1616_)
         MOV     a1,a1,LSR#16            // and back down again
         BX      lr
 
+#if 0
 // extern uint32 divu_6432_3232_ (uint32 xhi, uint32 xlo, uint32 y); // -> Quotient q
 // extern uint32 divu_32_rest;                                       // -> Rest r
 //       see cl_low_div.cc for algorithm
@@ -236,6 +237,7 @@ LABEL(divu_6432_3232_l1)
         MOV     a2, v4, LSR v3          // remainder = r >> s
         ORR     a1, a1, v6, ASL #16     // return highlow32(q1,q0)
         LDMFD   sp!, {v1,v2,v3,v4,v5,v6,pc}
+#endif
 
 // extern uintD* copy_loop_up (uintD* sourceptr, uintD* destptr, uintC count);
 //       entry

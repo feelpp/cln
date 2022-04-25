@@ -1148,9 +1148,9 @@ inline uintD divucopy_loop_down (uintD digit, const uintD* sourceptr, uintD* des
 // Multiplikations-Einfachschleife:
 // Multipliziert eine UDS mit einem kleinen Digit und addiert ein kleines Digit.
 // mulusmall_loop_down(digit,ptr,len,newdigit)
-// multipliziert die UDS  ptr[-len..-1]  mit digit (>=2, <=36),
-// addiert dabei newdigit (>=0, <digit) zur letzten Ziffer,
-// und liefert den Carry (>=0, <digit).
+// multipliziert die UDS  ptr[-len..-1]  mit digit,
+// addiert dabei newdigit zur letzten Ziffer,
+// und liefert den Carry.
   #if HAVE_DD
   inline uintD mulusmall_loop_down (uintD digit, uintD* ptr, uintC len, uintD newdigit)
     { var uintDD carry = newdigit;
@@ -1862,9 +1862,9 @@ inline uintD divucopy_loop_down (uintD digit, const uintD* sourceptr, uintD* des
 // Multiplikations-Einfachschleife:
 // Multipliziert eine UDS mit einem kleinen Digit und addiert ein kleines Digit.
 // mulusmall_loop_up(digit,ptr,len,newdigit)
-// multipliziert die UDS  ptr[0..len-1]  mit digit (>=2, <=36),
-// addiert dabei newdigit (>=0, <digit) zur letzten Ziffer,
-// und liefert den Carry (>=0, <digit).
+// multipliziert die UDS  ptr[0..len-1]  mit digit,
+// addiert dabei newdigit zur letzten Ziffer,
+// und liefert den Carry.
   #if HAVE_DD
   inline uintD mulusmall_loop_up (uintD digit, uintD* ptr, uintC len, uintD newdigit)
     { var uintDD carry = newdigit;

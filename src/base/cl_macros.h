@@ -98,8 +98,6 @@
     #endif
   #elif defined(_AIX)
     #pragma alloca // AIX requires this to be the first thing in the file.
-  #elif defined(WATCOM)
-    #include <malloc.h> // defines `alloca' as a macro
   #elif !defined(NO_ALLOCA)
     extern "C" void* alloca (size_t size);
   #endif

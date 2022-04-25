@@ -309,20 +309,10 @@ inline uint32 mulu32_unchecked (uint32 arg1, uint32 arg2)
        cl_unused (hi_zuweisung (uint32)(_prod>>32));                             \
        lo_zuweisung (uint32)(_prod);                                          \
      })
-#elif defined(WATCOM) && defined(__i386__) && !defined(NO_ASM)
-  #define mulu32(x,y,hi_zuweisung,lo_zuweisung)  \
-    { var uint32 _hi;                     \
-      var uint32 _lo;                     \
-      _lo = mulu32_(x,y), _hi = mulu32_high_();    \
-      cl_unused (hi_zuweisung _hi); lo_zuweisung _lo; \
-    }
-  extern "C" uint32 mulu32_high_ (void);
-  #pragma aux mulu32_ = 0xF7 0xE2 /* mull %edx */ parm [eax] [edx] value [eax] modify [eax edx];
-  #pragma aux mulu32_high_ = /* */ value [edx] modify [];
 #else
   #define mulu32(x,y,hi_zuweisung,lo_zuweisung)  \
     { lo_zuweisung mulu32_(x,y); cl_unused (hi_zuweisung mulu32_high); }
-  #if (defined(__m68k__) || defined(__sparc__) || defined(__sparc64__) || defined(__arm__) || (defined(__i386__) && !defined(WATCOM) && !defined(MICROSOFT)) || defined(__x86_64__) || defined(__mips__) || defined(__hppa__)) && !defined(NO_ASM)
+  #if (defined(__m68k__) || defined(__sparc__) || defined(__sparc64__) || defined(__arm__) || (defined(__i386__) && !defined(MICROSOFT)) || defined(__x86_64__) || defined(__mips__) || defined(__hppa__)) && !defined(NO_ASM)
     // mulu32_ extern in Assembler
     #if defined(__sparc__) || defined(__sparc64__)
       extern "C" uint32 _get_g1 (void);
@@ -786,24 +776,10 @@ inline uint32 mulu32_unchecked (uint32 arg1, uint32 arg2)
      })
   #define divu_6432_3232_(xhi,xlo,y) \
     ({var uint32 ___q; divu_6432_3232(xhi,xlo,y,___q=,); ___q; })
-#elif defined(WATCOM) && defined(__i386__) && !defined(NO_ASM)
-  #define divu_6432_3232(xhi,xlo,y,q_zuweisung,r_zuweisung)  \
-    { var uint32 __xhi = (xhi);						\
-      var uint32 __xlo = (xlo);						\
-      var uint32 __y = (y);						\
-      var uint32 __q;							\
-      var uint32 __r;							\
-      __q = divu_6432_3232_(__xhi,__xlo,__y); __r = divu_6432_3232_rest(); \
-      cl_unused (q_zuweisung __q);						\
-      r_zuweisung __r;							\
-    }
-  extern "C" uint32 divu_6432_3232_rest (void);
-  #pragma aux divu_6432_3232_ = 0xF7 0xF1 /* divl %ecx */ parm [edx] [eax] [ecx] value [eax] modify [eax edx];
-  #pragma aux divu_6432_3232_rest = /* */ value [edx] modify [];
 #else
   #define divu_6432_3232(xhi,xlo,y,q_zuweisung,r_zuweisung)  \
     { cl_unused (q_zuweisung divu_6432_3232_(xhi,xlo,y)); r_zuweisung divu_32_rest; }
-  #if (defined(__m68k__) || defined(__sparc__) || defined(__sparc64__) || (defined(__arm__) && 0) || (defined(__i386__) && !defined(WATCOM) && !defined(MICROSOFT)) || defined(__x86_64__) || defined(__hppa__)) && !defined(NO_ASM)
+  #if (defined(__m68k__) || defined(__sparc__) || defined(__sparc64__) || (defined(__arm__) && 0) || (defined(__i386__) && !defined(MICROSOFT)) || defined(__x86_64__) || defined(__hppa__)) && !defined(NO_ASM)
     // divu_6432_3232_ extern in Assembler
     #if defined(__sparc__) || defined(__sparc64__)
       extern "C" uint32 _get_g1 (void);

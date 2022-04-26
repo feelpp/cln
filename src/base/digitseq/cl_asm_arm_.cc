@@ -48,10 +48,8 @@ pc      .req    r15
 #define END
 
 
-
-
-#if defined(__arm7m__) || defined(__arm8__) || defined(__arm9__) || defined(__strongarm__)
-  // ARM7M and later have 32x32 -> 64 multiplies which execute in 2-4 clocks.
+#if __ARM_ARCH >= 7
+  // ARM7 and later have 32x32 -> 64 multiplies which execute in 2-4 clocks.
   #define HAVE_umull
 #endif
 

@@ -693,11 +693,7 @@ inline uint32 mulu32_unchecked (uint32 arg1, uint32 arg2)
 // < uint32 q: floor(x/y)
 // < uint32 r: x mod y
 // < x = q*y+r
-#if defined(__GNUC__) && defined(__arm__) && !defined(NO_ASM) && 0
-  extern "C" uint64 divu_6432_3232_ (uint32 xhi, uint32 xlo, uint32 y); // -> Quotient q
-#else
-  extern "C" uint32 divu_6432_3232_ (uint32 xhi, uint32 xlo, uint32 y); // -> Quotient q
-#endif
+extern "C" uint32 divu_6432_3232_ (uint32 xhi, uint32 xlo, uint32 y); // -> Quotient q
 #ifdef _MSC_VER
   // Workaround MSVC compiler bug.
 } extern "C" uint32 divu_32_rest; namespace cln {                       // -> Rest r
@@ -742,12 +738,6 @@ inline uint32 mulu32_unchecked (uint32 arg1, uint32 arg2)
        var uint32 _r __asm__("%g1");				    \
        cl_unused (q_zuweisung _q); r_zuweisung _r;				    \
      })
-#elif defined(__GNUC__) && defined(__arm__) && !defined(NO_ASM) && 0
-  #define divu_6432_3232(xhi,xlo,y,q_zuweisung,r_zuweisung)  \
-    ({ var uint64 _q = divu_6432_3232_(xhi,xlo,y); /* extern in Assembler */\
-       q_zuweisung retval64_r0(_q);	\
-       r_zuweisung retval64_r1(_q);	\
-     })
 #elif defined(__GNUC__) && (defined(__i386__) || defined(__x86_64__)) && !defined(NO_ASM)
   #define divu_6432_3232(xhi,xlo,y,q_zuweisung,r_zuweisung)  \
     ({var uint32 __xhi = (xhi);						\
@@ -779,7 +769,7 @@ inline uint32 mulu32_unchecked (uint32 arg1, uint32 arg2)
 #else
   #define divu_6432_3232(xhi,xlo,y,q_zuweisung,r_zuweisung)  \
     { cl_unused (q_zuweisung divu_6432_3232_(xhi,xlo,y)); r_zuweisung divu_32_rest; }
-  #if (defined(__m68k__) || defined(__sparc__) || defined(__sparc64__) || (defined(__arm__) && 0) || (defined(__i386__) && !defined(MICROSOFT)) || defined(__x86_64__) || defined(__hppa__)) && !defined(NO_ASM)
+  #if (defined(__m68k__) || defined(__sparc__) || defined(__sparc64__) || (defined(__i386__) && !defined(MICROSOFT)) || defined(__x86_64__) || defined(__hppa__)) && !defined(NO_ASM)
     // divu_6432_3232_ extern in Assembler
     #if defined(__sparc__) || defined(__sparc64__)
       extern "C" uint32 _get_g1 (void);

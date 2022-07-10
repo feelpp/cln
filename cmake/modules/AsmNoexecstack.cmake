@@ -8,16 +8,16 @@
 # (notice the leading whitespace). Grrr!
 string(STRIP "${CMAKE_C_COMPILER_ARG1}" _c_compiler_arg1)
 
-set(_conftest_c "${CMAKE_BINARY_DIR}/conftest.c")
-set(_conftest_s "${CMAKE_BINARY_DIR}/conftest.s")
-set(_conftest_o "${CMAKE_BINARY_DIR}/conftest.o")
+set(_conftest_c "${CMAKE_CURRENT_BINARY_DIR}/conftest.c")
+set(_conftest_s "${CMAKE_CURRENT_BINARY_DIR}/conftest.s")
+set(_conftest_o "${CMAKE_CURRENT_BINARY_DIR}/conftest.o")
 set(_need_noexecstack)
 set(_cc_ret)
 
 file(WRITE ${_conftest_c} "void foo() { }")
 
 execute_process(
-	COMMAND ${CMAKE_C_COMPILER} ${_c_compiler_arg1} -S ${_conftest_c}
+	COMMAND ${CMAKE_C_COMPILER} ${_c_compiler_arg1} -S ${_conftest_c} -o ${_conftest_s}
 	RESULT_VARIABLE _cc_ret
 )
 

@@ -47,7 +47,7 @@
   #else
     #error "No 64 bit integer type?"
   #endif
-  #if (defined(__alpha__) || defined(__ia64__) || defined(__mips64__) || defined(__powerpc64__) || defined(__s390x__) || (defined(__sparc__) && defined(__arch64__)) || (defined(__x86_64__) || defined(_M_AMD64)) || defined(__aarch64__) || (defined(__riscv) && __riscv_xlen == 64) || defined(__e2k__))
+  #if (defined(__alpha__) || defined(__ia64__) || defined(__mips64__) || defined(__powerpc64__) || defined(__s390x__) || (defined(__sparc__) && defined(__arch64__)) || (defined(__x86_64__) || defined(_M_AMD64)) || defined(__aarch64__) || (defined(__riscv) && __riscv_xlen == 64) || defined(__e2k__) || defined(__loongarch_lp64))
     // 64 bit registers in hardware
     #define HAVE_FAST_LONGLONG
   #endif
@@ -73,7 +73,7 @@
 
 // Integer type used for counters.
 // Constraint: sizeof(uintC) >= sizeof(uintL)
-  #if (defined(HAVE_FAST_LONGLONG) && (defined(__alpha__) || defined(__ia64__) || defined(__powerpc64__) || defined(__s390x__) || (defined(__sparc__) && defined(__arch64__)) || defined(__x86_64__) || defined(__aarch64__) || defined(__mips64__) || (defined(__riscv) && __riscv_xlen == 64) || defined(__e2k__)))
+  #if (defined(HAVE_FAST_LONGLONG) && (defined(__alpha__) || defined(__ia64__) || defined(__powerpc64__) || defined(__s390x__) || (defined(__sparc__) && defined(__arch64__)) || defined(__x86_64__) || defined(__aarch64__) || defined(__mips64__) || (defined(__riscv) && __riscv_xlen == 64) || defined(__e2k__) || defined(__loongarch_lp64)))
     #define intCsize long_bitsize
     typedef long           sintC;
     typedef unsigned long  uintC;
@@ -85,7 +85,7 @@
 
 // Integer type used for lfloat exponents.
 // Constraint: sizeof(uintE) >= sizeof(uintC)
-  #if (defined(__alpha__) || defined(__ia64__) || defined(__powerpc64__) || defined(__s390x__) || (defined(__sparc__) && defined(__arch64__)) || defined(__x86_64__) || defined(__i386__) || defined(__mips__) || defined(__rs6000__) || defined(__aarch64__) || (defined(__riscv) && __riscv_xlen == 64) || defined(__e2k__))
+  #if (defined(__alpha__) || defined(__ia64__) || defined(__powerpc64__) || defined(__s390x__) || (defined(__sparc__) && defined(__arch64__)) || defined(__x86_64__) || defined(__i386__) || defined(__mips__) || defined(__rs6000__) || defined(__aarch64__) || (defined(__riscv) && __riscv_xlen == 64) || defined(__e2k__) || defined(__loongarch_lp64))
     #define intEsize 64
     typedef sint64  sintE;
     typedef uint64  uintE;
@@ -126,7 +126,7 @@
     typedef int sintD;
     typedef unsigned int uintD;
   #else  // we are not using GMP, so just guess something reasonable
-    #if (defined(HAVE_FAST_LONGLONG) && (defined(__alpha__) || defined(__ia64__) || defined(__powerpc64__) || (defined(__sparc__) && defined(__arch64__)) || defined(__s390x__) || defined(__x86_64__) || defined(__aarch64__) || defined(__mips64__) || (defined(__riscv) && __riscv_xlen == 64) || defined(__e2k__)))
+    #if (defined(HAVE_FAST_LONGLONG) && (defined(__alpha__) || defined(__ia64__) || defined(__powerpc64__) || (defined(__sparc__) && defined(__arch64__)) || defined(__s390x__) || defined(__x86_64__) || defined(__aarch64__) || defined(__mips64__) || (defined(__riscv) && __riscv_xlen == 64) || defined(__e2k__) || defined(__loongarch_lp64)))
       #define intDsize 64
       typedef sint64  sintD;
       typedef uint64  uintD;

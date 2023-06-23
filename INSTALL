@@ -70,14 +70,14 @@ Later on you can update your copy with
 $ git pull
 
 2. Make sure all required software is installed. This is *really*
-important step. If some package is missing, the `configure' script might
+important step. If some package is missing, the ‘configure’ script might
 be misgenerated,
 
 3. Run
 
 $ ./autogen.sh
 
-to generate the `configure' script, and proceed in a standard way, i.e.
+to generate the ‘configure’ script, and proceed in a standard way, i.e.
 
 $ ./configure
 $ make

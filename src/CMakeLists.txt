@@ -953,6 +953,7 @@ if (CMAKE_CXX_COMPILER_ID MATCHES "GNU" OR CMAKE_CXX_COMPILER_ID MATCHES "Clang"
 endif()
 
 add_library(cln ${cln_sources} ${cln_asm_sources})
+target_compile_options(cln PRIVATE $<$<CONFIG:Debug>:-O1> )
 add_library(cln::cln ALIAS cln)
 # The incantation below tells CMake to set the correct SONAME and use
 # the conventional libcln.so.SONAME.X.Y file name. The variables

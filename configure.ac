@@ -51,12 +51,12 @@ CL_CANONICAL_HOST
 CL_CANONICAL_HOST_CPU
                       dnl DEFS __${host_cpu}__
 case $host_os in
-    *mingw*)
-     AC_DISABLE_SHARED
   dnl Shared libraries are not supported on some platforms [yet]
+  mingw* | windows*)
+    AC_DISABLE_SHARED
     ;;
-    *)
-     AC_ENABLE_SHARED
+  *)
+    AC_ENABLE_SHARED
     ;;
 esac
 LT_INIT

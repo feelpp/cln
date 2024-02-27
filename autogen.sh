@@ -23,15 +23,14 @@
 
 # Usage: ./autogen.sh
 
-GETTEXT_VERSION=0.20.1
-TEXINFO_VERSION=6.5
+TEXINFO_VERSION=7.0.1
 
 mkdir -p build-aux m4
 
 # libtool
 # Don't use libtoolize, as it may not be installed or may be outdated.
 for f in build-aux/ltmain.sh m4/libtool.m4 m4/ltoptions.m4 m4/ltsugar.m4 m4/ltversion.m4 m4/lt~obsolete.m4; do
-  { wget -nv --timeout=5 -O $f.tmp "https://git.savannah.gnu.org/gitweb/?p=gettext.git;a=blob_plain;f=${f};hb=refs/tags/v${GETTEXT_VERSION}" \
+  { wget -nv --timeout=5 -O $f.tmp "https://git.savannah.gnu.org/gitweb/?p=gettext.git;a=blob_plain;f=${f}" \
       && mv $f.tmp $f; \
   } || rm -f $f.tmp
 done

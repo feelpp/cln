@@ -35,8 +35,8 @@ This manual documents @sc{cln}, a Class Library for Numbers.
 Published by Bruno Haible, @code{<haible@@clisp.cons.org>} and
 Richard B. Kreckel, @code{<kreckel@@ginac.de>}.
 
-Copyright (C)  Bruno Haible 1995 - 2019.
-Copyright (C)  Richard B. Kreckel 2000 - 2019.
+Copyright (C)  Bruno Haible 1988 - 2024.
+Copyright (C)  Richard B. Kreckel 2000 - 2024.
 Copyright (C)  Alexei Sheplyakov 2008 - 2010.
 
 Permission is granted to make and distribute verbatim copies of
@@ -71,9 +71,9 @@ by the author.
 @author @uref{http://www.ginac.de/CLN}
 @page
 @vskip 0pt plus 1filll
-Copyright @copyright{} Bruno Haible 1995 - 2019.
+Copyright @copyright{} Bruno Haible 1988 - 2024.
 @sp 0
-Copyright @copyright{} Richard B. Kreckel 2000 - 2019.
+Copyright @copyright{} Richard B. Kreckel 2000 - 2024.
 @sp 0
 Copyright @copyright{} Alexei Sheplyakov 2008 - 2010.
 

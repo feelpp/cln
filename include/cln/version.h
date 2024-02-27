@@ -8,7 +8,7 @@
 /* Minor version number of CLN */
 #define CL_VERSION_MINOR 3
 /* Patchlevel version number of CLN */
-#define CL_VERSION_PATCHLEVEL 6
+#define CL_VERSION_PATCHLEVEL 7
 
 /**
  * Libtool's library version information for CLN.
@@ -24,7 +24,7 @@
  */
 #define CL_LT_CURRENT 6
 #define CL_LT_AGE 0
-#define CL_LT_REVISION 6
+#define CL_LT_REVISION 7
 
 #define CL_STR_HELPER(x) #x
 #define CL_STR(x) CL_STR_HELPER(x)

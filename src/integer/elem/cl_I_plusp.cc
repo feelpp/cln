@@ -21,7 +21,7 @@ bool plusp (const cl_I& x)
 {
 	if (inline_minusp(x))
 		return false; // x<0 -> nein
-	elif (inline_zerop(x))
+	else if (inline_zerop(x))
 		return false; // x=0 -> nein
 	else
 		return true; // sonst ist x>0.
